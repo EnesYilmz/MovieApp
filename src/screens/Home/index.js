@@ -11,7 +11,7 @@ import {inject, observer} from 'mobx-react';
 @observer
 export default class Home extends Component {
     static navigationOptions = {
-        headerLeft: LogoutButton,
+        headerLeft: null
     };
 
     componentDidMount() {
@@ -25,7 +25,7 @@ export default class Home extends Component {
                 {MovieStore.loading && <Spinner size={"small"} color={"#333"} />}
                 <FlatList
                     data={MovieStore.movies}
-                    keyExtractor={item => item._id}
+                    keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => <MovieListItem item={item}/>}
                 />
             </List>

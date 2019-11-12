@@ -14,7 +14,7 @@ export default class Detail extends Component {
         return (
             <Content style={{padding: 10}}>
                 <H1>{this.item.title}</H1>
-                <Text>IMDB Score: {this.item.imdb_score}</Text>
+                <Text>Average Score: {this.item.vote_average}</Text>
             </Content>
         );
     }

@@ -13,16 +13,17 @@ import AuthLoading from './screens/AuthLoading';
 // app stack
 import Home from './screens/Home';
 import Detail from './screens/Detail';
+import Genres from './screens/Genres';
 
 // auth stack
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 
-const AppStack = createStackNavigator({
+const HomeStack = createStackNavigator({
     Home: {
         screen: Home,
         navigationOptions: {
-            title: 'Home'
+            title: 'Popular'
         },
     },
     Detail: {
@@ -34,6 +35,35 @@ const AppStack = createStackNavigator({
 },{
     headerLayoutPreset: "center"
 });
+
+const MovieTabNavigator = createBottomTabNavigator(
+    {
+        Home: {
+            screen: HomeStack,
+            navigationOptions: {
+                title: 'Popular',
+                tabBarIcon: ({tintColor}) => <Icon name="film" style={{color: tintColor}}/>,
+            },
+        },
+        Detail: {
+            screen: Genres,
+            navigationOptions: {
+                title: 'Top Rated',
+                tabBarIcon: ({tintColor}) => <Icon name="star" style={{color: tintColor}}/>,
+            },
+        },
+    },
+    {
+        initialRouteName: 'Home',
+        tabBarOptions: {
+            activeTintColor: '#fff',
+            inactiveTintColor: '#586589',
+            style: {
+                backgroundColor: '#171f33',
+            },
+        },
+    },
+);
 
 const AuthStack = createBottomTabNavigator(
     {
@@ -69,7 +99,7 @@ const SwitchNavigator = createSwitchNavigator(
         AuthLoading: {
             screen: AuthLoading
         },
-        App: AppStack,
+        App: HomeStack,
         Auth: AuthStack
     },
     {
@@ -77,4 +107,4 @@ const SwitchNavigator = createSwitchNavigator(
     }
 );
 
-export default createAppContainer(AppStack);
+export default createAppContainer(MovieTabNavigator);

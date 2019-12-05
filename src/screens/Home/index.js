@@ -15,18 +15,18 @@ export default class Home extends Component {
     };
 
     static navigationOptions = {
-        headerLeft: null
+        headerRight: null
     };
 
     componentDidMount() {
-        this.props.MovieStore.getMovies(this.state.page)
+        this.props.MovieStore.getPopularMovies(this.state.page)
     }
 
     loadMore = () => {
         this.setState({
             page: this.state.page + 1
         }, () => {
-            this.props.MovieStore.getMovies(this.state.page)
+            this.props.MovieStore.getPopularMovies(this.state.page)
         });
     };
 
@@ -35,13 +35,13 @@ export default class Home extends Component {
         return (
             <List>
                 <FlatList
-                    data={MovieStore.movies}
+                    data={MovieStore.popularMovies}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => <MovieListItem item={item}/>}
                     numColumns={2}
 
                     onEndReached={this.loadMore}
-                    onEndReachedThreshold={1}
+                    onEndReachedThreshold={0.2}
                 />
                 {MovieStore.loading && <Spinner size={"small"} color={"#333"} />}
             </List>

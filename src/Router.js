@@ -13,7 +13,7 @@ import AuthLoading from './screens/AuthLoading';
 // app stack
 import Home from './screens/Home';
 import Detail from './screens/Detail';
-import Genres from './screens/Genres';
+import TopRated from './screens/TopRated';
 
 // auth stack
 import SignIn from './screens/SignIn';
@@ -36,6 +36,23 @@ const HomeStack = createStackNavigator({
     headerLayoutPreset: "center"
 });
 
+const TopRatedStack = createStackNavigator({
+    TopRated: {
+        screen: TopRated,
+        navigationOptions: {
+            title: 'Top Rated'
+        },
+    },
+    Detail: {
+        screen: Detail,
+        navigationOptions: {
+            title: 'Detail'
+        },
+    }
+},{
+    headerLayoutPreset: "center"
+});
+
 const MovieTabNavigator = createBottomTabNavigator(
     {
         Home: {
@@ -46,7 +63,7 @@ const MovieTabNavigator = createBottomTabNavigator(
             },
         },
         Detail: {
-            screen: Genres,
+            screen: TopRatedStack,
             navigationOptions: {
                 title: 'Top Rated',
                 tabBarIcon: ({tintColor}) => <Icon name="star" style={{color: tintColor}}/>,

@@ -11,7 +11,7 @@ const MovieListItem = ({item}) => (
         <Body>
             <Image
                 resizeMode={'contain'}
-                style={{ width: '100%',  height: Dimensions.get('window').width / 2}}
+                style={{ width: '100%',  height: Dimensions.get('window').width / 1.80}}
                 source={{ uri: 'https://image.tmdb.org/t/p/w500/' + item.poster_path}}/>
         </Body>
     </ListItem>

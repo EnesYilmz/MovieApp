@@ -10,7 +10,9 @@ const MovieListItem = ({item}) => (
         <Left>
             <Text>{item.title}</Text>
         </Left>
+        <Text>Avarage: {item.vote_average}</Text>
         <Right>
+
             <Icon name="arrow-forward" />
         </Right>
     </ListItem>

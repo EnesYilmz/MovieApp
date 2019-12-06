@@ -30,15 +30,23 @@ export default class Genres extends Component {
         });
     };
 
+    renderFooter = () => {
+        return(
+            <View>
+                <Spinner size={"small"} color={"#333"} />
+            </View>
+        )
+    };
+
     render() {
         const {MovieStore} = this.props;
         return (
             <List>
-                {MovieStore.loading && <Spinner size={"small"} color={"#333"} />}
                 <FlatList
-                    data={MovieStore.topRatedMovies}
+                    data={MovieStore.topRatedMovies.slice(1)}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({item}) => <MovieListItem item={item}/>}
+                    renderItem={({item, index}) => <MovieListItem item={item} index={index}/>}
+                    ListFooterComponent={this.renderFooter}
 
                     onEndReached={this.loadMore}
                     onEndReachedThreshold={0.2}

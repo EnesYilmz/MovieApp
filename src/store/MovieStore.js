@@ -12,7 +12,11 @@ import AuthStore from './AuthStore';
 class MovieStore{
     @observable popularMovies = [];
     @observable topRatedMovies = [];
-    @observable movie = {};
+    @observable movieDetail = {};
+    @observable movieCast = [];
+    @observable movieCrew = [];
+    @observable movieReviews = [];
+    @observable movieSimilar = [];
     @observable loading = false;
 
     @action async getPopularMovies(page){
@@ -48,9 +52,23 @@ class MovieStore{
         try{
             const {data} = await axios.get(`${API_BASE}/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`);
             runInAction(() => {
-                this.movie = data;
+                this.movieDetail = data;
+            });
+            const credits = await axios.get(`${API_BASE}/3/movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`);
+            runInAction(() => {
+                this.movieCast = credits.data.cast;
+                this.movieCrew = credits.data.crew;
+            });
+            const reviews = await axios.get(`${API_BASE}/3/movie/${movieId}/reviews?api_key=${API_KEY}&language=en-US`);
+            runInAction(() => {
+                this.movieReviews = reviews.data.results;
+            });
+            const similar = await axios.get(`${API_BASE}/3/movie/${movieId}/similar?api_key=${API_KEY}&language=en-US`);
+            runInAction(() => {
+                console.log(similar.data.results);
+                this.movieSimilar = similar.data.results;
                 this.loading = false;
-            })
+            });
         }catch (e) {
             this.loading = false;
             console.log(e);

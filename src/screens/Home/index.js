@@ -30,6 +30,14 @@ export default class Home extends Component {
         });
     };
 
+    renderFooter = () => {
+        return(
+            <View>
+                <Spinner size={"small"} color={"#333"} />
+            </View>
+        )
+    };
+
     render() {
         const {MovieStore} = this.props;
         return (
@@ -39,11 +47,11 @@ export default class Home extends Component {
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => <MovieListItem item={item}/>}
                     numColumns={2}
+                    ListFooterComponent={this.renderFooter}
 
                     onEndReached={this.loadMore}
                     onEndReachedThreshold={0.2}
                 />
-                {MovieStore.loading && <Spinner size={"small"} color={"#333"} />}
             </List>
         );
     }

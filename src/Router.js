@@ -2,7 +2,8 @@ import React from 'react';
 
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
 
 // native base
 import {Icon} from 'native-base';
@@ -12,8 +13,10 @@ import AuthLoading from './screens/AuthLoading';
 
 // app stack
 import Home from './screens/Home';
+import Genres from './screens/Home/Genres';
 import Detail from './screens/Detail';
 import TopRated from './screens/TopRated';
+import PopularMoviesWithGenre from './screens/Home/PopularMoviesWithGenre';
 
 // auth stack
 import SignIn from './screens/SignIn';
@@ -21,36 +24,42 @@ import SignUp from './screens/SignUp';
 
 const HomeStack = createStackNavigator({
     Home: {
-        screen: Home,
-        navigationOptions: {
-            title: 'Popular'
-        },
+        screen: Home
     },
     Detail: {
         screen: Detail,
         navigationOptions: {
-            title: 'Detail'
+            title: 'Detail',
         },
+    },
+    Genres:{
+        screen: Genres,
+        navigationOptions: {
+            title: 'Genres',
+        },
+    },
+    PopularMoviesWithGenre:{
+        screen: PopularMoviesWithGenre
     }
-},{
-    headerLayoutPreset: "center"
+}, {
+    headerLayoutPreset: 'center',
 });
 
 const TopRatedStack = createStackNavigator({
     TopRated: {
         screen: TopRated,
         navigationOptions: {
-            title: 'Top Rated'
+            title: 'Top Rated',
         },
     },
     Detail: {
         screen: Detail,
         navigationOptions: {
-            title: 'Detail'
+            title: 'Detail',
         },
-    }
-},{
-    headerLayoutPreset: "center"
+    },
+}, {
+    headerLayoutPreset: 'center',
 });
 
 const MovieTabNavigator = createBottomTabNavigator(
@@ -114,14 +123,14 @@ const AuthStack = createBottomTabNavigator(
 const SwitchNavigator = createSwitchNavigator(
     {
         AuthLoading: {
-            screen: AuthLoading
+            screen: AuthLoading,
         },
         App: HomeStack,
-        Auth: AuthStack
+        Auth: AuthStack,
     },
     {
-        initialRouteName: 'AuthLoading'
-    }
+        initialRouteName: 'AuthLoading',
+    },
 );
 
 export default createAppContainer(MovieTabNavigator);

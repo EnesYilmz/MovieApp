@@ -9,7 +9,7 @@ import {inject, observer} from 'mobx-react';
 
 @inject('MovieStore')
 @observer
-export default class Genres extends Component {
+export default class TopRated extends Component {
     state={
         page: 1
     };
@@ -30,14 +30,6 @@ export default class Genres extends Component {
         });
     };
 
-    renderFooter = () => {
-        return(
-            <View>
-                <Spinner size={"small"} color={"#333"} />
-            </View>
-        )
-    };
-
     render() {
         const {MovieStore} = this.props;
         return (
@@ -46,7 +38,7 @@ export default class Genres extends Component {
                     data={MovieStore.topRatedMovies.slice(1)}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item, index}) => <MovieListItem item={item} index={index}/>}
-                    ListFooterComponent={this.renderFooter}
+                    ListFooterComponent={<Spinner size={"small"} color={"#333"} />}
 
                     onEndReached={this.loadMore}
                     onEndReachedThreshold={0.2}

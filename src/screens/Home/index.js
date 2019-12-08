@@ -1,41 +1,41 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 
 import LogoutButton from '../../components/LogoutButton';
 import MovieListItem from './MovieListItem';
+import MenuButton from '../../components/MenuButton';
 
 import {List, Spinner} from 'native-base';
 import {inject, observer} from 'mobx-react';
 
+import NavigationService from '../../NavigationService';
+import MovieStore from '../../store/MovieStore';
+
 @inject('MovieStore')
 @observer
 export default class Home extends Component {
-    state={
-        page: 1
+    state = {
+        page: 1,
     };
 
     static navigationOptions = {
-        headerRight: null
+        title: 'Popular',
+        headerLeft:
+            <TouchableOpacity onPress={() =>  NavigationService.navigate('Genres')}>
+                <MenuButton/>
+            </TouchableOpacity>,
     };
 
     componentDidMount() {
-        this.props.MovieStore.getPopularMovies(this.state.page)
+        this.props.MovieStore.getPopularMovies(this.state.page);
     }
 
     loadMore = () => {
         this.setState({
-            page: this.state.page + 1
+            page: this.state.page + 1,
         }, () => {
-            this.props.MovieStore.getPopularMovies(this.state.page)
+            this.props.MovieStore.getMorePopularMovies(this.state.page);
         });
-    };
-
-    renderFooter = () => {
-        return(
-            <View>
-                <Spinner size={"small"} color={"#333"} />
-            </View>
-        )
     };
 
     render() {
@@ -47,7 +47,7 @@ export default class Home extends Component {
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => <MovieListItem item={item}/>}
                     numColumns={2}
-                    ListFooterComponent={this.renderFooter}
+                    ListFooterComponent={<Spinner size={"small"} color={"#333"} />}
 
                     onEndReached={this.loadMore}
                     onEndReachedThreshold={0.2}

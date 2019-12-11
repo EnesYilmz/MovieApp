@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListItem, Text, Left, Right, H3} from 'native-base';
+import {ListItem, Text, Left, Right, H3 } from 'native-base';
 
 import NavigationService from '../../NavigationService';
 import ProgressCircle from 'react-native-progress-circle';
@@ -18,12 +18,12 @@ const scoreColour = (vote_average) => {
     return scoreColour;
 };
 
-const MovieListItem = ({item, index}) => (
-    <ListItem noIndent onPress={() => NavigationService.navigate('Detail', {
-        item,
+const MovieListItem = ({item}) => (
+    <ListItem noIndent onPress={() => NavigationService.navigate('Detail',{
+        item
     })}>
         <Left>
-            <H3>{index + 1}. {item.title}</H3>
+            <H3>{item.title}</H3>
         </Left>
         <Right>
             <ProgressCircle

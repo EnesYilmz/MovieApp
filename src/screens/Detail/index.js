@@ -47,7 +47,7 @@ export default class Detail extends Component {
             scoreColour = '#3399FF';
         } else if (movie.vote_average >= 6) {
             scoreColour = '#ffff00';
-        } else if (movie.vote_average >= 5) {
+        } else {
             scoreColour = '#ff3333';
         }
 

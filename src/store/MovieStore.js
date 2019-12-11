@@ -13,6 +13,7 @@ class MovieStore{
     @observable popularMovies = [];
     @observable topRatedMovies = [];
     @observable moviesWithGenre = [];
+    @observable searchedMovies = [];
     @observable movieDetail = {};
     @observable movieCast = [];
     @observable movieCrew = [];
@@ -77,6 +78,24 @@ class MovieStore{
             this.loading = false;
             console.log(e);
         }
+    }
+
+    @action async searchMovies(text){
+        this.loading = true;
+        try{
+            const {data} = await axios.get(`${API_BASE}/3/search/movie?api_key=${API_KEY}&language=en-US&query=${text}`);
+            runInAction(() => {
+                this.searchedMovies = data.results;
+                this.loading = false;
+            })
+        }catch (e) {
+            this.loading = false;
+            console.log(e);
+        }
+    }
+
+    @action async setSearchedMovies(array){
+        this.searchedMovies = array;
     }
 
     @action async getGenres(){

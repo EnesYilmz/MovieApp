@@ -4,12 +4,17 @@ import {FlatList, StyleSheet, Text, View, TextInput} from 'react-native';
 import {List, Spinner} from 'native-base';
 import {inject, observer} from 'mobx-react';
 import MovieListItem from './MovieListItem';
+import LogoutButton from '../../components/LogoutButton';
 
 @inject('MovieStore')
 @observer
 export default class Search extends Component {
     state = {
         text: '',
+    };
+
+    static navigationOptions = {
+        headerRight: <LogoutButton/>
     };
 
     constructor(props){

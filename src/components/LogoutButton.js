@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import {inject} from 'mobx-react';
+import {Icon} from "native-base";
 
 @inject('AuthStore')
 export default class LogoutButton extends Component {
@@ -10,7 +11,7 @@ export default class LogoutButton extends Component {
       <TouchableOpacity
           onPress={() => this.props.AuthStore.removeToken()}
           style={styles.buttonContainer}>
-          <Text style={styles.text}>Logout</Text>
+          <Icon name="log-out" style={{fontSize: 26}}/>
       </TouchableOpacity>
     );
   }
@@ -18,7 +19,7 @@ export default class LogoutButton extends Component {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        padding: 10
+        paddingHorizontal: 18
     },
     text: {
         fontSize: 14

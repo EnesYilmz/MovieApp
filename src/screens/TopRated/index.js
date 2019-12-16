@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 
 import LogoutButton from '../../components/LogoutButton';
 import MovieListItem from './MovieListItem';
 
 import {List, Spinner} from 'native-base';
 import {inject, observer} from 'mobx-react';
+import NavigationService from '../../NavigationService';
 
 @inject('MovieStore')
 @observer
@@ -15,7 +16,7 @@ export default class TopRated extends Component {
     };
 
     static navigationOptions = {
-        headerLeft: null
+        headerRight: <LogoutButton/>
     };
 
     componentDidMount() {

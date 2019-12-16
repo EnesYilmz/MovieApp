@@ -3,7 +3,6 @@ import React from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
 
 // native base
 import {Icon} from 'native-base';
@@ -21,7 +20,6 @@ import PopularMoviesWithGenre from './screens/Home/PopularMoviesWithGenre';
 
 // auth stack
 import SignIn from './screens/SignIn';
-import SignUp from './screens/SignUp';
 
 const HomeStack = createStackNavigator({
     Home: {
@@ -116,46 +114,17 @@ const MovieTabNavigator = createBottomTabNavigator(
     },
 );
 
-const AuthStack = createBottomTabNavigator(
-    {
-        SignIn: {
-            screen: SignIn,
-            navigationOptions: {
-                title: 'Sign In',
-                tabBarIcon: ({tintColor}) => <Icon name="log-in" style={{color: tintColor}}/>,
-            },
-        },
-        SignUp: {
-            screen: SignUp,
-            navigationOptions: {
-                title: 'Sign Up',
-                tabBarIcon: ({tintColor}) => <Icon name="person-add" style={{color: tintColor}}/>,
-            },
-        },
-    },
-    {
-        initialRouteName: 'SignIn',
-        tabBarOptions: {
-            activeTintColor: '#fff',
-            inactiveTintColor: '#586589',
-            style: {
-                backgroundColor: '#171f33',
-            },
-        },
-    },
-);
-
 const SwitchNavigator = createSwitchNavigator(
     {
         AuthLoading: {
             screen: AuthLoading,
         },
-        App: HomeStack,
-        Auth: AuthStack,
+        App: MovieTabNavigator,
+        Auth: SignIn,
     },
     {
         initialRouteName: 'AuthLoading',
     },
 );
 
-export default createAppContainer(MovieTabNavigator);
+export default createAppContainer(SwitchNavigator);

@@ -25,10 +25,6 @@ class AuthStore{
     }
 
     @action async setupAuth(){
-        await this.getToken();
-    }
-
-    @action async getToken(){
         try{
             const token = await AsyncStorage.getItem('token');
             if(!token) {

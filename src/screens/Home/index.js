@@ -21,9 +21,10 @@ export default class Home extends Component {
     static navigationOptions = {
         title: 'Popular',
         headerLeft:
-            <TouchableOpacity onPress={() =>  NavigationService.navigate('Genres')}>
+            <TouchableOpacity onPress={() => NavigationService.navigate('Genres')}>
                 <MenuButton/>
             </TouchableOpacity>,
+        headerRight: <LogoutButton/>
     };
 
     componentDidMount() {
@@ -47,7 +48,7 @@ export default class Home extends Component {
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => <MovieListItem item={item}/>}
                     numColumns={2}
-                    ListFooterComponent={<Spinner size={"small"} color={"#333"} />}
+                    ListFooterComponent={<Spinner size={'small'} color={'#333'}/>}
 
                     onEndReached={this.loadMore}
                     onEndReachedThreshold={0.2}

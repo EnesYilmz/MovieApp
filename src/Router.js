@@ -17,6 +17,7 @@ import Detail from './screens/Detail';
 import TopRated from './screens/TopRated';
 import Search from './screens/Search';
 import PopularMoviesWithGenre from './screens/Home/PopularMoviesWithGenre';
+import Watchlist from './screens/Watchlist';
 
 // auth stack
 import SignIn from './screens/SignIn';
@@ -78,6 +79,23 @@ const SearchStack = createStackNavigator({
     headerLayoutPreset: 'center',
 });
 
+const WatchlistStack = createStackNavigator({
+    TopRated: {
+        screen: Watchlist,
+        navigationOptions: {
+            title: 'Watchlist',
+        },
+    },
+    Detail: {
+        screen: Detail,
+        navigationOptions: {
+            title: 'Detail',
+        },
+    },
+}, {
+    headerLayoutPreset: 'center',
+});
+
 const MovieTabNavigator = createBottomTabNavigator(
     {
         Home: {
@@ -99,6 +117,13 @@ const MovieTabNavigator = createBottomTabNavigator(
             navigationOptions: {
                 title: 'Search',
                 tabBarIcon: ({tintColor}) => <Icon name="search" style={{color: tintColor}}/>,
+            },
+        },
+        Watchlist: {
+            screen: WatchlistStack,
+            navigationOptions: {
+                title: 'Watchlist',
+                tabBarIcon: ({tintColor}) => <Icon name="list-box" style={{color: tintColor}}/>,
             },
         },
     },

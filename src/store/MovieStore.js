@@ -1,5 +1,5 @@
 import {observable, action, configure, runInAction} from 'mobx';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import {API_BASE, API_KEY} from '../constants';
 import axios from 'axios';
 
@@ -14,6 +14,7 @@ class MovieStore{
     @observable topRatedMovies = [];
     @observable moviesWithGenre = [];
     @observable searchedMovies = [];
+    @observable watchlistMovies = [];
     @observable movieDetail = {};
     @observable movieCast = [];
     @observable movieCrew = [];
@@ -86,6 +87,39 @@ class MovieStore{
             const {data} = await axios.get(`${API_BASE}/3/search/movie?api_key=${API_KEY}&language=en-US&query=${text}`);
             runInAction(() => {
                 this.searchedMovies = data.results;
+                this.loading = false;
+            })
+        }catch (e) {
+            this.loading = false;
+            console.log(e);
+        }
+    }
+
+    @action async getWatchlistMovies(){
+        let sessionId = await AsyncStorage.getItem('token');
+        this.loading = true;
+        try{
+            const {data} = await axios.get(`${API_BASE}/3/account/{account_id}/watchlist/movies?api_key=${API_KEY}&language=en-US&session_id=${sessionId}`);
+            runInAction(() => {
+                this.watchlistMovies = [...this.watchlistMovies, ...data.results];
+                this.loading = false;
+            })
+        }catch (e) {
+            this.loading = false;
+            console.log(e);
+        }
+    }
+
+    @action async addMovieWatchlist(movieId){
+        let sessionId = await AsyncStorage.getItem('token');
+        this.loading = true;
+        try{
+            await axios.post(`${API_BASE}/3/account/{account_id}/watchlist?api_key=${API_KEY}&session_id=${sessionId}`, {
+                media_type: "movie",
+                media_id: movieId,
+                watchlist: true
+            });
+            runInAction(() => {
                 this.loading = false;
             })
         }catch (e) {

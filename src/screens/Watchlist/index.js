@@ -5,14 +5,14 @@ import MovieListItem from './MovieListItem';
 import {List, Spinner} from 'native-base';
 import {inject, observer} from 'mobx-react';
 
-import NavigationService from '../../NavigationService';
 import MovieStore from '../../store/MovieStore';
 
 @inject('MovieStore')
 @observer
 export default class Watchlist extends Component {
     state = {
-        loading: true
+        loading: true,
+        refreshing: false
     };
 
     static navigationOptions = {
@@ -25,6 +25,20 @@ export default class Watchlist extends Component {
         }))
     }
 
+    getWatchlistMovies = () => {
+        this.props.MovieStore.getWatchlistMovies().then(() => this.setState({
+            refreshing: false
+        }))
+    };
+
+    onRefresh = () => {
+        this.setState({
+            refreshing: true
+        }, () => {
+            this.getWatchlistMovies();
+        })
+    };
+
     render() {
         const {MovieStore} = this.props;
         return (
@@ -34,6 +48,9 @@ export default class Watchlist extends Component {
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item, index}) => <MovieListItem item={item} index={index}/>}
                     ListFooterComponent={this.state.loading && <Spinner size={"large"} color={"#333"} />}
+
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh}
                 />
             </List>
         );

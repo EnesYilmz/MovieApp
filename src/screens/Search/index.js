@@ -24,7 +24,6 @@ export default class Search extends Component {
 
     searchMovie = text => {
         this.props.MovieStore.setSearchedMovies([]).then(() => this.props.MovieStore.searchMovies(text));
-        console.log('search');
     };
 
     render() {

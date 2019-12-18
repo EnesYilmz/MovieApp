@@ -1,6 +1,6 @@
 import {observable, action, configure, runInAction} from 'mobx';
-import AsyncStorage from '@react-native-community/async-storage';
 import {API_BASE, API_KEY} from '../constants';
+import NavigationService from '../NavigationService';
 import axios from 'axios';
 
 configure({
@@ -96,12 +96,12 @@ class MovieStore{
     }
 
     @action async getWatchlistMovies(){
-        let sessionId = await AsyncStorage.getItem('token');
+        let sessionId = AuthStore.token;
         this.loading = true;
         try{
             const {data} = await axios.get(`${API_BASE}/3/account/{account_id}/watchlist/movies?api_key=${API_KEY}&language=en-US&session_id=${sessionId}`);
             runInAction(() => {
-                this.watchlistMovies = [...this.watchlistMovies, ...data.results];
+                this.watchlistMovies = data.results;
                 this.loading = false;
             })
         }catch (e) {
@@ -111,7 +111,7 @@ class MovieStore{
     }
 
     @action async addMovieWatchlist(movieId){
-        let sessionId = await AsyncStorage.getItem('token');
+        let sessionId = AuthStore.token;
         this.loading = true;
         try{
             await axios.post(`${API_BASE}/3/account/{account_id}/watchlist?api_key=${API_KEY}&session_id=${sessionId}`, {
@@ -126,6 +126,7 @@ class MovieStore{
             this.loading = false;
             console.log(e);
         }
+        NavigationService.navigate('Watchlist');
     }
 
     @action async setSearchedMovies(array){

@@ -116,7 +116,11 @@ export default class Detail extends Component {
                                 }
                                 }/>
                         </View>
-
+                    </View>
+                    <View style={{paddingBottom: 20}}>
+                        <Button onPress={() => MovieStore.addMovieWatchlist(movie.id)} block info>
+                            <Text>Add to watchlist</Text>
+                        </Button>
                     </View>
                     <View style={{paddingBottom: 20}}>
                         <H2>Overview</H2>

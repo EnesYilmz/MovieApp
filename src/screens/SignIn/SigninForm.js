@@ -9,7 +9,7 @@ import axios from 'axios';
 
 import {inject} from 'mobx-react';
 import {API_BASE, API_KEY} from '../../constants';
-import {Image, View} from 'react-native';
+import {Image, View, TouchableOpacity, Linking} from 'react-native';
 
 @inject('AuthStore')
 export default class SigninForm extends Component {
@@ -20,13 +20,13 @@ export default class SigninForm extends Component {
             await axios.post(`${API_BASE}/3/authentication/token/validate_with_login?api_key=${API_KEY}`, {
                 username: username,
                 password: password,
-                request_token: requestToken
+                request_token: requestToken,
             });
             const session = await axios.post(`${API_BASE}/3/authentication/session/new?api_key=${API_KEY}`, {request_token: requestToken});
             bag.setSubmitting(false);
             await this.props.AuthStore.saveToken(session.data.session_id);
         } catch (e) {
-            alert("Sign-in failed!\n" + e);
+            alert('Sign-in failed!\n' + e);
             bag.setSubmitting(false);
             bag.setErrors(e);
         }
@@ -94,6 +94,11 @@ export default class SigninForm extends Component {
                             {isSubmitting && <Spinner size={'small'} color={'white'}/>}
                             <Text>Login</Text>
                         </Button>
+                        <TouchableOpacity onPress={() => Linking.openURL("https://www.themoviedb.org/account/signup")}>
+                            <View style={{alignItems: 'center', marginTop: 20}}>
+                                <Text style={{color: 'blue'}}>Click here to become a member</Text>
+                            </View>
+                        </TouchableOpacity>
                         <View style={{alignItems: 'center'}}>
                             <Image
                                 resizeMode={'contain'}
